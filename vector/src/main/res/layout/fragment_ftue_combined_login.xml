@@ -271,7 +271,8 @@
             app:layout_constraintEnd_toEndOf="@id/loginGutterEnd"
             app:layout_constraintStart_toStartOf="@id/loginGutterStart"
             app:layout_constraintTop_toBottomOf="@id/loginWithQrCode"
-            tools:signMode="signup" />
+            tools:signMode="signup"
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
