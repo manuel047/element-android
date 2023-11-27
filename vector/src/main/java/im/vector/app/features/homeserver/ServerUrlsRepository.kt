@@ -89,5 +89,5 @@ class ServerUrlsRepository @Inject constructor(
     /**
      * Return default homeserver url from resources.
      */
-    fun getDefaultHomeServerUrl() = stringProvider.getString(R.string.matrix_org_server_url)
+    fun getDefaultHomeServerUrl() = stringProvider.getString(R.string.mcf_org_server_url)
 }
