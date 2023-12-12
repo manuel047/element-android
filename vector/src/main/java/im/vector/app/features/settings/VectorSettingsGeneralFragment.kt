@@ -177,7 +177,7 @@ class VectorSettingsGeneralFragment :
         // Avatar
         mUserAvatarPreference.let {
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                galleryOrCameraDialogHelper.show()
+                //galleryOrCameraDialogHelper.show()
                 false
             }
         }
@@ -187,7 +187,7 @@ class VectorSettingsGeneralFragment :
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 newValue
                         ?.let { value -> (value as? String)?.trim() }
-                        ?.let { value -> onDisplayNameChanged(value) }
+                //        ?.let { value -> onDisplayNameChanged(value) }
                 false
             }
         }
@@ -195,49 +195,49 @@ class VectorSettingsGeneralFragment :
         val homeServerCapabilities = session.homeServerCapabilitiesService().getHomeServerCapabilities()
         // Password
         // Hide the preference if password can not be updated
-        if (homeServerCapabilities.canChangePassword) {
-            mPasswordPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                onPasswordUpdateClick()
-                false
-            }
-        } else {
+//        if (homeServerCapabilities.canChangePassword) {
+//            mPasswordPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+//                onPasswordUpdateClick()
+//                false
+//            }
+//        } else {
             mPasswordPreference.isVisible = false
-        }
+//        }
 
         // Manage 3Pid
         // Hide the preference if 3pids can not be updated
         mManage3pidsPreference.isVisible = homeServerCapabilities.canChange3pid
 
-        val openDiscoveryScreenPreferenceClickListener = Preference.OnPreferenceClickListener {
-            (requireActivity() as VectorSettingsActivity).navigateTo(
-                    DiscoverySettingsFragment::class.java,
-                    SettingsActivityPayload.DiscoverySettings().toMvRxBundle()
-            )
-            true
-        }
+//        val openDiscoveryScreenPreferenceClickListener = Preference.OnPreferenceClickListener {
+//            (requireActivity() as VectorSettingsActivity).navigateTo(
+//                    DiscoverySettingsFragment::class.java,
+//                    SettingsActivityPayload.DiscoverySettings().toMvRxBundle()
+//            )
+//            true
+//        }
 
-        val discoveryPreference = findPreference<VectorPreference>(VectorPreferences.SETTINGS_DISCOVERY_PREFERENCE_KEY)!!
-        discoveryPreference.onPreferenceClickListener = openDiscoveryScreenPreferenceClickListener
-
-        mIdentityServerPreference.onPreferenceClickListener = openDiscoveryScreenPreferenceClickListener
+//        val discoveryPreference = findPreference<VectorPreference>(VectorPreferences.SETTINGS_DISCOVERY_PREFERENCE_KEY)!!
+//        discoveryPreference.onPreferenceClickListener = openDiscoveryScreenPreferenceClickListener
+//
+//        mIdentityServerPreference.onPreferenceClickListener = openDiscoveryScreenPreferenceClickListener
 
         // External account management URL for delegated OIDC auth
         // Hide the preference if no URL is given by server
-        if (homeServerCapabilities.externalAccountManagementUrl != null) {
-            mExternalAccountManagementPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                openUrlInChromeCustomTab(it.context, null, homeServerCapabilities.externalAccountManagementUrl!!)
-                true
-            }
-
-            val hostname = URL(homeServerCapabilities.externalAccountManagementUrl).host
-
-            mExternalAccountManagementPreference.summary = requireContext().getString(
-                    R.string.settings_external_account_management,
-                    hostname
-            )
-        } else {
+//        if (homeServerCapabilities.externalAccountManagementUrl != null) {
+//            mExternalAccountManagementPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+//                openUrlInChromeCustomTab(it.context, null, homeServerCapabilities.externalAccountManagementUrl!!)
+//                true
+//            }
+//
+//            val hostname = URL(homeServerCapabilities.externalAccountManagementUrl).host
+//
+//            mExternalAccountManagementPreference.summary = requireContext().getString(
+//                    R.string.settings_external_account_management,
+//                    hostname
+//            )
+//        } else {
             mExternalAccountManagementPreference.isVisible = false
-        }
+//        }
 
         // Advanced settings
 
@@ -350,7 +350,9 @@ class VectorSettingsGeneralFragment :
     }
 
     private fun refreshIntegrationManagerSettings() {
-        val integrationAllowed = session.integrationManagerService().isIntegrationEnabled()
+        // TODO: CHRIS: Force integrations off
+        val integrationAllowed = false
+        // val integrationAllowed = session.integrationManagerService().isIntegrationEnabled()
         (findPreference<SwitchPreference>(VectorPreferences.SETTINGS_ALLOW_INTEGRATIONS_KEY))!!.let {
             val savedListener = it.onPreferenceChangeListener
             it.onPreferenceChangeListener = null

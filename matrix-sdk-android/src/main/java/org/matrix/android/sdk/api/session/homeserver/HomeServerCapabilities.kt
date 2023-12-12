@@ -20,23 +20,23 @@ data class HomeServerCapabilities(
         /**
          * True if it is possible to change the password of the account.
          */
-        val canChangePassword: Boolean = true,
+        val canChangePassword: Boolean = false,
         /**
          * True if it is possible to change the display name of the account.
          */
-        val canChangeDisplayName: Boolean = true,
+        val canChangeDisplayName: Boolean = false,
         /**
          * True if it is possible to change the avatar of the account.
          */
-        val canChangeAvatar: Boolean = true,
+        val canChangeAvatar: Boolean = false,
         /**
          * True if it is possible to change the 3pid associations of the account.
          */
-        val canChange3pid: Boolean = true,
+        val canChange3pid: Boolean = false,
         /**
          * Max size of file which can be uploaded to the homeserver in bytes. [MAX_UPLOAD_FILE_SIZE_UNKNOWN] if unknown or not retrieved yet.
          */
-        val maxUploadFileSize: Long = MAX_UPLOAD_FILE_SIZE_UNKNOWN,
+        val maxUploadFileSize: Long = 0L,
         /**
          * Last version identity server and binding supported.
          */

@@ -215,9 +215,10 @@ class NewHomeDetailFragment :
             newChatBottomSheet.takeIf { !it.isAdded }?.show(requireActivity().supportFragmentManager, NewChatBottomSheet.TAG)
         }
 
-        views.newLayoutOpenSpacesButton.debouncedClicks {
-            spaceListBottomSheet.takeIf { !it.isAdded }?.show(requireActivity().supportFragmentManager, SpaceListBottomSheet.TAG)
-        }
+        views.newLayoutOpenSpacesButton.visibility = View.GONE
+//        views.newLayoutOpenSpacesButton.debouncedClicks {
+//            spaceListBottomSheet.takeIf { !it.isAdded }?.show(requireActivity().supportFragmentManager, SpaceListBottomSheet.TAG)
+//        }
     }
 
     private fun showFABs() {
