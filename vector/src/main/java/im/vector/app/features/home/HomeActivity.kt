@@ -625,28 +625,28 @@ class HomeActivity :
 
     override fun handleMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_home_suggestion -> {
-                bugReporter.openBugReportScreen(this, ReportType.SUGGESTION)
-                true
-            }
-            R.id.menu_home_report_bug -> {
-                bugReporter.openBugReportScreen(this, ReportType.BUG_REPORT)
-                true
-            }
-            R.id.menu_home_init_sync_legacy -> {
-                // Configure the SDK
-                initialSyncStrategy = InitialSyncStrategy.Legacy
-                // And clear cache
-                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
-                true
-            }
-            R.id.menu_home_init_sync_optimized -> {
-                // Configure the SDK
-                initialSyncStrategy = InitialSyncStrategy.Optimized()
-                // And clear cache
-                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
-                true
-            }
+//            R.id.menu_home_suggestion -> {
+//                bugReporter.openBugReportScreen(this, ReportType.SUGGESTION)
+//                true
+//            }
+//            R.id.menu_home_report_bug -> {
+//                bugReporter.openBugReportScreen(this, ReportType.BUG_REPORT)
+//                true
+//            }
+//            R.id.menu_home_init_sync_legacy -> {
+//                // Configure the SDK
+//                initialSyncStrategy = InitialSyncStrategy.Legacy
+//                // And clear cache
+//                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
+//                true
+//            }
+//            R.id.menu_home_init_sync_optimized -> {
+//                // Configure the SDK
+//                initialSyncStrategy = InitialSyncStrategy.Optimized()
+//                // And clear cache
+//                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
+//                true
+//            }
             R.id.menu_home_filter -> {
                 navigator.openRoomsFiltering(this)
                 true
@@ -659,14 +659,14 @@ class HomeActivity :
                 showLayoutSettings()
                 true
             }
-            R.id.menu_home_invite_friends -> {
-                launchInviteFriends()
-                true
-            }
-            R.id.menu_home_qr -> {
-                launchQrCode()
-                true
-            }
+//            R.id.menu_home_invite_friends -> {
+//                launchInviteFriends()
+//                true
+//            }
+//            R.id.menu_home_qr -> {
+//                launchQrCode()
+//                true
+//            }
             else -> false
         }
     }
