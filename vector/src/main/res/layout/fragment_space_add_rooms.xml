@@ -48,6 +48,7 @@
             android:layout_marginBottom="8dp"
             android:minHeight="@dimen/layout_touch_size"
             android:text="@string/create_new_room"
+            android:visibility="gone"
             app:icon="@drawable/ic_plus_circle"
             app:iconPadding="13dp"
             app:iconTint="?colorPrimary"
