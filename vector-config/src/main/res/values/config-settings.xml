@@ -10,14 +10,14 @@
     <!-- Level 0: Root -->
 
     <bool name="settings_root_general_visible">true</bool>
-    <bool name="settings_root_notification_visible">true</bool>
+    <bool name="settings_root_notification_visible">false</bool>
     <bool name="settings_root_preferences_visible">true</bool>
-    <bool name="settings_root_voice_video_visible">true</bool>
+    <bool name="settings_root_voice_video_visible">false</bool>
     <bool name="settings_root_security_privacy_visible">true</bool>
-    <bool name="settings_root_labs_visible">true</bool>
-    <bool name="settings_root_advanced_visible">true</bool>
-    <bool name="settings_root_help_about_visible">true</bool>
-    <bool name="settings_root_legals_visible">true</bool>
+    <bool name="settings_root_labs_visible">false</bool>
+    <bool name="settings_root_advanced_visible">false</bool>
+    <bool name="settings_root_help_about_visible">false</bool>
+    <bool name="settings_root_legals_visible">false</bool>
 
     <!-- Level 1: General -->
 

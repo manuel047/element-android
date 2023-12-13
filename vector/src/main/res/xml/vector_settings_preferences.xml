@@ -32,10 +32,12 @@
 
     <im.vector.app.core.preference.VectorPreferenceCategory
         android:title="@string/spaces"
+        android:enabled="false"
         android:key="SETTINGS_PREF_SPACE_CATEGORY">
 
         <im.vector.app.core.preference.VectorSwitchPreference
             android:defaultValue="false"
+            android:shouldDisableView="true"
             android:key="SETTINGS_PREF_SPACE_SHOW_ALL_ROOM_IN_HOME"
             android:summary="@string/all_rooms_youre_in_will_be_shown_in_home"
             android:title="@string/preference_show_all_rooms_in_home" />
@@ -85,14 +87,17 @@
             app:isPreferenceVisible="@bool/settings_interface_bubble_visible" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
-            android:defaultValue="@bool/settings_timeline_show_live_sender_info_default"
-            app:isPreferenceVisible="@bool/settings_timeline_show_live_sender_info_visible"
+            android:enabled="false"
+            android:defaultValue="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_TIMELINE_SHOW_LIVE_SENDER_INFO"
             android:summary="@string/settings_show_latest_profile_description"
             android:title="@string/settings_show_latest_profile" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
-            android:defaultValue="true"
+            android:enabled="false"
+            app:isPreferenceVisible="false"
+            android:defaultValue="false"
             android:key="SETTINGS_SHOW_URL_PREVIEW_KEY"
             android:summary="@string/settings_inline_url_preview_summary"
             android:title="@string/settings_inline_url_preview" />
@@ -113,12 +118,15 @@
             android:title="@string/settings_show_read_receipts" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
+            android:shouldDisableView="true"
             android:defaultValue="true"
             android:key="SETTINGS_SHOW_REDACTED_KEY"
             android:summary="@string/settings_show_redacted_summary"
             android:title="@string/settings_show_redacted" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:defaultValue="false"
             android:key="SETTINGS_SHOW_JOIN_LEAVE_MESSAGES_KEY"
             android:summary="@string/settings_show_join_leave_messages_summary"
@@ -130,17 +138,21 @@
             android:summary="@string/settings_show_avatar_display_name_changes_messages_summary"
             android:title="@string/settings_show_avatar_display_name_changes_messages" />
 
-        <!--im.vector.app.core.preference.VectorSwitchPreference
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:defaultValue="false"
             android:key="SETTINGS_ENABLE_CHAT_EFFECTS"
             android:summary="@string/settings_chat_effects_description"
-            android:title="@string/settings_chat_effects_title" /-->
+            android:title="@string/settings_chat_effects_title" />
 
-        <!--im.vector.app.core.preference.VectorSwitchPreference
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:defaultValue="false"
             android:key="SETTINGS_AUTOPLAY_ANIMATED_IMAGES"
             android:summary="@string/settings_autoplay_animated_images_summary"
-            android:title="@string/settings_autoplay_animated_images_title" /-->
+            android:title="@string/settings_autoplay_animated_images_title" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
             android:key="SETTINGS_VIBRATE_ON_MENTION_KEY"
@@ -148,7 +160,9 @@
             app:isPreferenceVisible="@bool/false_not_implemented" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
-            android:defaultValue="true"
+            android:enabled="false"
+            app:isPreferenceVisible="false"
+            android:defaultValue="false"
             android:key="SETTINGS_ENABLE_DIRECT_SHARE"
             android:summary="@string/settings_enable_direct_share_summary"
             android:title="@string/settings_enable_direct_share_title" />
@@ -225,9 +239,12 @@
 
     </im.vector.app.core.preference.VectorPreferenceCategory>
 
-    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_category_room_directory">
+    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_category_room_directory"
+        app:isPreferenceVisible="false">
 
         <im.vector.app.core.preference.VectorSwitchPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_ROOM_DIRECTORY_SHOW_ALL_PUBLIC_ROOMS"
             android:summary="@string/settings_room_directory_show_all_rooms_summary"
             android:title="@string/settings_room_directory_show_all_rooms" />

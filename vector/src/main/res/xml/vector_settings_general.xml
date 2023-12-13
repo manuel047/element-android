@@ -8,32 +8,42 @@
         android:title="@string/settings_user_settings">
 
         <im.vector.app.core.preference.UserAvatarPreference
+            android:enabled="false"
             android:key="SETTINGS_PROFILE_PICTURE_PREFERENCE_KEY"
             android:title="@string/settings_profile_picture" />
 
         <im.vector.app.core.preference.VectorEditTextPreference
+            android:enabled="false"
             android:key="SETTINGS_DISPLAY_NAME_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/settings_display_name" />
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_CHANGE_PASSWORD_PREFERENCE_KEY"
             android:summary="@string/change_password_summary"
             android:title="@string/settings_password" />
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_EMAILS_AND_PHONE_NUMBERS_PREFERENCE_KEY"
             android:summary="@string/settings_emails_and_phone_numbers_summary"
             android:title="@string/settings_emails_and_phone_numbers_title"
             app:fragment="im.vector.app.features.settings.threepids.ThreePidsSettingsFragment" />
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_DISCOVERY_PREFERENCE_KEY"
             android:persistent="false"
             android:summary="@string/settings_discovery_manage"
             android:title="@string/settings_discovery_category" />
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_EXTERNAL_ACCOUNT_MANAGEMENT_KEY"
             android:persistent="false"
             android:summary="@string/settings_external_account_management"
@@ -57,14 +67,21 @@
 
     </im.vector.app.core.preference.VectorPreferenceCategory>
 
-    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_integrations">
+    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_integrations"
+        android:enabled="false"
+        app:isPreferenceVisible="false"
+        >
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:focusable="false"
             android:persistent="false"
             android:summary="@string/settings_integrations_summary" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_ALLOW_INTEGRATIONS_KEY"
             android:persistent="false"
             android:title="@string/settings_integration_allow" />
