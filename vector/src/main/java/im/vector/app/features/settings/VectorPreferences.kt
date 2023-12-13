@@ -459,7 +459,7 @@ class VectorPreferences @Inject constructor(
      * @return true if the join and leave membership events should be shown in the messages list
      */
     fun showJoinLeaveMessages(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SHOW_JOIN_LEAVE_MESSAGES_KEY, true)
+        return defaultPrefs.getBoolean(SETTINGS_SHOW_JOIN_LEAVE_MESSAGES_KEY, false)
     }
 
     /**
@@ -468,7 +468,7 @@ class VectorPreferences @Inject constructor(
      * @return true true if the avatar and display name events should be shown in the messages list.
      */
     fun showAvatarDisplayNameChangeMessages(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SHOW_AVATAR_DISPLAY_NAME_CHANGES_MESSAGES_KEY, true)
+        return defaultPrefs.getBoolean(SETTINGS_SHOW_AVATAR_DISPLAY_NAME_CHANGES_MESSAGES_KEY, false)
     }
 
     /**
