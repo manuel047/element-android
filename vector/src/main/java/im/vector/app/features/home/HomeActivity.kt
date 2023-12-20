@@ -590,15 +590,16 @@ class HomeActivity :
     override fun onResume() {
         super.onResume()
 
+        // TODO: CHRIS: Disabled dialog for now
         if (vectorUncaughtExceptionHandler.didAppCrash()) {
             vectorUncaughtExceptionHandler.clearAppCrashStatus()
 
-            MaterialAlertDialogBuilder(this)
+            /*MaterialAlertDialogBuilder(this)
                     .setMessage(R.string.send_bug_report_app_crashed)
                     .setCancelable(false)
                     .setPositiveButton(R.string.yes) { _, _ -> bugReporter.openBugReportScreen(this) }
                     .setNegativeButton(R.string.no) { _, _ -> bugReporter.deleteCrashFile() }
-                    .show()
+                    .show()*/
         }
 
         // Force remote backup state update to update the banner if needed

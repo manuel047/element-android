@@ -29,9 +29,8 @@
             android:enabled="false"
             app:isPreferenceVisible="false"
             android:key="SETTINGS_EMAILS_AND_PHONE_NUMBERS_PREFERENCE_KEY"
-            android:summary="@string/settings_emails_and_phone_numbers_summary"
             android:title="@string/settings_emails_and_phone_numbers_title"
-            app:fragment="im.vector.app.features.settings.threepids.ThreePidsSettingsFragment" />
+            app:fragment="im.vector.app.features.settings.threepids.ThreePidsSettingsFragment"/>
 
         <im.vector.app.core.preference.VectorPreference
             android:enabled="false"
@@ -97,17 +96,23 @@
     <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_advanced">
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_LOGGED_IN_PREFERENCE_KEY"
             android:title="@string/settings_logged_in"
             tools:summary="\@user:matrix.org" />
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_HOME_SERVER_PREFERENCE_KEY"
             android:title="@string/settings_home_server"
             app:fragment="im.vector.app.features.settings.homeserver.HomeserverSettingsFragment"
             tools:summary="https://homeserver.org" />
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_IDENTITY_SERVER_PREFERENCE_KEY"
             android:title="@string/settings_identity_server"
             tools:summary="https://identity.server.url" />
