@@ -90,32 +90,34 @@ class HomeDrawerFragment :
             SignOutUiWorker(requireActivity()).perform()
         }
 
-        views.homeDrawerQRCodeButton.debouncedClicks {
-            UserCodeActivity.newIntent(requireContext(), sharedActionViewModel.session.myUserId).let {
-                val options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                requireActivity(),
-                                views.homeDrawerHeaderAvatarView,
-                                ViewCompat.getTransitionName(views.homeDrawerHeaderAvatarView) ?: ""
-                        )
-                startActivity(it, options.toBundle())
-            }
-        }
+//        views.homeDrawerQRCodeButton.debouncedClicks {
+//            UserCodeActivity.newIntent(requireContext(), sharedActionViewModel.session.myUserId).let {
+//                val options =
+//                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                                requireActivity(),
+//                                views.homeDrawerHeaderAvatarView,
+//                                ViewCompat.getTransitionName(views.homeDrawerHeaderAvatarView) ?: ""
+//                        )
+//                startActivity(it, options.toBundle())
+//            }
+//        }
 
-        views.homeDrawerInviteFriendButton.debouncedClicks {
-            permalinkFactory.createPermalinkOfCurrentUser()?.let { permalink ->
-                analyticsTracker.screen(MobileScreen(screenName = MobileScreen.ScreenName.InviteFriends))
-                val text = getString(R.string.invite_friends_text, permalink)
 
-                startSharePlainTextIntent(
-                        context = requireContext(),
-                        activityResultLauncher = null,
-                        chooserTitle = getString(R.string.invite_friends),
-                        text = text,
-                        extraTitle = getString(R.string.invite_friends_rich_title)
-                )
-            }
-        }
+//        views.homeDrawerInviteFriendButton.debouncedClicks {
+//            permalinkFactory.createPermalinkOfCurrentUser()?.let { permalink ->
+//                analyticsTracker.screen(MobileScreen(screenName = MobileScreen.ScreenName.InviteFriends))
+//                val text = getString(R.string.invite_friends_text, permalink)
+//
+//                startSharePlainTextIntent(
+//                        context = requireContext(),
+//                        activityResultLauncher = null,
+//                        chooserTitle = getString(R.string.invite_friends),
+//                        text = text,
+//                        extraTitle = getString(R.string.invite_friends_rich_title)
+//                )
+//            }
+//        }
+        views.homeDrawerInviteFriendButton.visibility = View.GONE
 
         // Debug menu
         views.homeDrawerHeaderDebugView.debouncedClicks {
