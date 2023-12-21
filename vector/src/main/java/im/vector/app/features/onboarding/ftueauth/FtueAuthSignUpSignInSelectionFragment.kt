@@ -62,10 +62,11 @@ class FtueAuthSignUpSignInSelectionFragment :
 
     private fun render(state: OnboardingViewState) {
         when (state.serverType) {
+            // TODO: CHRIS: This is used on the "SSO" sign in option
             ServerType.MatrixOrg -> renderServerInformation(
-                    icon = R.drawable.ic_logo_matrix_org,
-                    title = getString(R.string.login_connect_to, state.selectedHomeserver.userFacingUrl.toReducedUrl()),
-                    subtitle = getString(R.string.login_server_matrix_org_text)
+                    icon = null,
+                    title = "Connect to Michelin Connected Fleet Messaging", // getString(R.string.login_connect_to, state.selectedHomeserver.userFacingUrl.toReducedUrl()),
+                    subtitle = "Use your existing MCF credentials to log in." // getString(R.string.login_server_matrix_org_text)
             )
             ServerType.EMS -> renderServerInformation(
                     icon = R.drawable.ic_logo_element_matrix_services,
