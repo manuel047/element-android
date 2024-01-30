@@ -54,6 +54,7 @@ import im.vector.app.features.MainActivityArgs
 import im.vector.app.features.analytics.accountdata.AnalyticsAccountDataViewModel
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.crypto.keysbackup.setup.KeysBackupSetupSharedViewModel
 import im.vector.app.features.crypto.recover.SetupMode
 import im.vector.app.features.home.room.list.actions.RoomListSharedAction
 import im.vector.app.features.home.room.list.actions.RoomListSharedActionViewModel
@@ -91,10 +92,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
+import org.matrix.android.sdk.api.session.crypto.keysbackup.KeysBackupState
 import org.matrix.android.sdk.api.session.permalinks.PermalinkService
-import org.matrix.android.sdk.api.session.sync.InitialSyncStrategy
 import org.matrix.android.sdk.api.session.sync.SyncRequestState
-import org.matrix.android.sdk.api.session.sync.initialSyncStrategy
 import org.matrix.android.sdk.api.util.MatrixItem
 import timber.log.Timber
 import javax.inject.Inject
@@ -117,6 +117,7 @@ class HomeActivity :
 
     private lateinit var sharedActionViewModel: HomeSharedActionViewModel
     private lateinit var roomListSharedActionViewModel: RoomListSharedActionViewModel
+    private lateinit var keyBackupSetupViewModel: KeysBackupSetupSharedViewModel
 
     private val homeActivityViewModel: HomeActivityViewModel by viewModel()
 
@@ -141,6 +142,10 @@ class HomeActivity :
     @Inject lateinit var notificationPermissionManager: NotificationPermissionManager
 
     private var isNewAppLayoutEnabled: Boolean = false // delete once old app layout is removed
+
+    private val session by lazy {
+        activeSessionHolder.getActiveSession()
+    }
 
     private val createSpaceResultLauncher = registerStartForActivityResult { activityResult ->
         if (activityResult.resultCode == Activity.RESULT_OK) {
@@ -209,6 +214,9 @@ class HomeActivity :
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, false)
         sharedActionViewModel = viewModelProvider[HomeSharedActionViewModel::class.java]
         roomListSharedActionViewModel = viewModelProvider[RoomListSharedActionViewModel::class.java]
+        keyBackupSetupViewModel = viewModelProvider[KeysBackupSetupSharedViewModel::class.java]
+        keyBackupSetupViewModel.initSession(session)
+
         views.drawerLayout.addDrawerListener(drawerListener)
         if (isFirstCreation()) {
             if (vectorPreferences.isNewAppLayoutEnabled()) {
@@ -605,12 +613,21 @@ class HomeActivity :
         // Force remote backup state update to update the banner if needed
         serverBackupStatusViewModel.refreshRemoteStateIfNeeded()
 
+        // Check if there is a backup and start creating backup if not enabled
+        startKeyBackupOperations()
+
         // Check nightly
         if (nightlyProxy.canDisplayPopup()) {
             nightlyProxy.updateApplication()
         }
 
         checkNewAppLayoutFlagChange()
+    }
+
+    private fun startKeyBackupOperations() {
+        if (keyBackupSetupViewModel.session.cryptoService().keysBackupService().getState() == KeysBackupState.Disabled) {
+            keyBackupSetupViewModel.prepareRecoveryKey(this, keyBackupSetupViewModel.userId)
+        }
     }
 
     private fun checkNewAppLayoutFlagChange() {
