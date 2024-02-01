@@ -45,7 +45,8 @@
             tools:summary="3To0 8c/K VRJd 4Njb DUgv 6r8A SNp9 ETZt pMwU CpE4 XJE" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
-            android:enabled="true"
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_ENCRYPTION_NEVER_SENT_TO_PREFERENCE_KEY"
             android:summary="@string/encryption_never_send_to_unverified_devices_summary"
             android:title="@string/encryption_never_send_to_unverified_devices_title" />
@@ -121,9 +122,14 @@
 
     <im.vector.app.core.preference.VectorPreferenceCategory
         android:key="SETTINGS_ANALYTICS_PREFERENCE_KEY"
-        android:title="@string/settings_analytics">
+        android:title="@string/settings_analytics"
+        android:enabled="false"
+        app:isPreferenceVisible="false"
+        >
 
         <im.vector.app.core.preference.VectorSwitchPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:defaultValue="false"
             android:key="SETTINGS_USER_ANALYTICS_CONSENT_KEY"
             android:summary="@string/settings_opt_in_of_analytics_summary"
@@ -136,6 +142,8 @@
         android:title="@string/settings_other">
 
         <im.vector.app.core.preference.VectorPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:key="SETTINGS_SECURITY_PIN"
             android:persistent="false"
             android:summary="@string/settings_security_application_protection_summary"
@@ -148,6 +156,8 @@
             android:title="@string/settings_security_incognito_keyboard_title" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
+            android:enabled="false"
+            app:isPreferenceVisible="false"
             android:defaultValue="false"
             android:key="SETTINGS_SECURITY_USE_FLAG_SECURE"
             android:summary="@string/settings_security_prevent_screenshots_summary"

@@ -236,5 +236,5 @@ class FtueAuthCombinedRegisterFragment :
         }
     }
 
-    private fun OnboardingViewState.isNumericOnlyUserIdForbidden() = selectedHomeserver.userFacingUrl == getString(R.string.matrix_org_server_url)
+    private fun OnboardingViewState.isNumericOnlyUserIdForbidden() = selectedHomeserver.userFacingUrl == getString(R.string.mcf_org_server_url)
 }

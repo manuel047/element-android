@@ -58,9 +58,9 @@ class RoomDetailRobot {
         // Menu
         openMenu()
         pressBack()
-        clickMenu(R.id.voice_call)
+//        clickMenu(R.id.voice_call)
         pressBack()
-        clickMenu(R.id.video_call)
+//        clickMenu(R.id.video_call)
         pressBack()
     }
 

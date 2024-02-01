@@ -107,9 +107,11 @@
             android:paddingEnd="12dp"
             android:text="@string/ftue_auth_create_account_edit_server_selection"
             android:textAllCaps="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/selectedServerDescription"
             app:layout_constraintEnd_toEndOf="@id/loginGutterEnd"
-            app:layout_constraintTop_toTopOf="@id/chooseYourServerHeader" />
+            app:layout_constraintTop_toTopOf="@id/chooseYourServerHeader"
+            tools:visibility="visible"/>
 
         <Space
             android:id="@+id/serverSelectionSpacing"
@@ -194,11 +196,13 @@
             android:text="@string/ftue_auth_forgot_password"
             android:textAllCaps="true"
             android:textColor="?colorSecondary"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/actionSpacing"
             app:layout_constraintEnd_toEndOf="@id/loginGutterEnd"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="@id/loginGutterStart"
-            app:layout_constraintTop_toBottomOf="@id/loginPasswordInput" />
+            app:layout_constraintTop_toBottomOf="@id/loginPasswordInput"
+            tools:visibility="visible"/>
 
         <Space
             android:id="@+id/actionSpacing"
@@ -267,7 +271,8 @@
             app:layout_constraintEnd_toEndOf="@id/loginGutterEnd"
             app:layout_constraintStart_toStartOf="@id/loginGutterStart"
             app:layout_constraintTop_toBottomOf="@id/loginWithQrCode"
-            tools:signMode="signup" />
+            tools:signMode="signup"
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

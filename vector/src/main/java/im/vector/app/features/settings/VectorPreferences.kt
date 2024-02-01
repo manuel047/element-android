@@ -459,7 +459,7 @@ class VectorPreferences @Inject constructor(
      * @return true if the join and leave membership events should be shown in the messages list
      */
     fun showJoinLeaveMessages(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SHOW_JOIN_LEAVE_MESSAGES_KEY, true)
+        return defaultPrefs.getBoolean(SETTINGS_SHOW_JOIN_LEAVE_MESSAGES_KEY, false)
     }
 
     /**
@@ -468,7 +468,7 @@ class VectorPreferences @Inject constructor(
      * @return true true if the avatar and display name events should be shown in the messages list.
      */
     fun showAvatarDisplayNameChangeMessages(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SHOW_AVATAR_DISPLAY_NAME_CHANGES_MESSAGES_KEY, true)
+        return defaultPrefs.getBoolean(SETTINGS_SHOW_AVATAR_DISPLAY_NAME_CHANGES_MESSAGES_KEY, false)
     }
 
     /**
@@ -776,7 +776,7 @@ class VectorPreferences @Inject constructor(
      * Tells if a confirmation dialog should be displayed before staring a call.
      */
     fun preventAccidentalCall(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_CALL_PREVENT_ACCIDENTAL_CALL_KEY, false)
+        return defaultPrefs.getBoolean(SETTINGS_CALL_PREVENT_ACCIDENTAL_CALL_KEY, true)
     }
 
     /**
@@ -839,7 +839,7 @@ class VectorPreferences @Inject constructor(
      * @return true to send the typing notifs
      */
     fun sendTypingNotifs(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SEND_TYPING_NOTIF_KEY, true)
+        return defaultPrefs.getBoolean(SETTINGS_SEND_TYPING_NOTIF_KEY, false)
     }
 
     /**
@@ -875,7 +875,7 @@ class VectorPreferences @Inject constructor(
      * @return true if a dialog has been displayed to ask to use the analytics tracking
      */
     fun didAskToUseAnalytics(): Boolean {
-        return defaultPrefs.getBoolean(DID_ASK_TO_USE_ANALYTICS_TRACKING_KEY, false)
+        return defaultPrefs.getBoolean(DID_ASK_TO_USE_ANALYTICS_TRACKING_KEY, true)
     }
 
     /**
@@ -894,7 +894,7 @@ class VectorPreferences @Inject constructor(
      * @return true if the user wants to see URL previews in the timeline
      */
     fun showUrlPreviews(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SHOW_URL_PREVIEW_KEY, true)
+        return defaultPrefs.getBoolean(SETTINGS_SHOW_URL_PREVIEW_KEY, false)
     }
 
     /**
@@ -921,7 +921,7 @@ class VectorPreferences @Inject constructor(
      * @return true to show emoji keyboard button.
      */
     fun showEmojiKeyboard(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SHOW_EMOJI_KEYBOARD, true)
+        return defaultPrefs.getBoolean(SETTINGS_SHOW_EMOJI_KEYBOARD, false)
     }
 
     /**
@@ -962,7 +962,7 @@ class VectorPreferences @Inject constructor(
      * @return true if the rage shake is used
      */
     fun useRageshake(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_USE_RAGE_SHAKE_KEY, true)
+        return defaultPrefs.getBoolean(SETTINGS_USE_RAGE_SHAKE_KEY, false)
     }
 
     /**
@@ -1014,7 +1014,7 @@ class VectorPreferences @Inject constructor(
     }
 
     fun chatEffectsEnabled(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_ENABLE_CHAT_EFFECTS, true)
+        return defaultPrefs.getBoolean(SETTINGS_ENABLE_CHAT_EFFECTS, false)
     }
 
     fun directShareEnabled(): Boolean {

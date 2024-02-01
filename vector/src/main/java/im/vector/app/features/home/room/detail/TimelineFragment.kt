@@ -64,6 +64,7 @@ import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import im.vector.app.BuildConfig
 import im.vector.app.R
 import im.vector.app.core.animations.play
 import im.vector.app.core.dialogs.ConfirmationDialogBuilder
@@ -301,13 +302,13 @@ class TimelineFragment :
             }
         }
 
-        if (childFragmentManager.findFragmentById(R.id.composerContainer) == null) {
+        if (childFragmentManager.findFragmentById(R.id.composerContainer) == null && !BuildConfig.ONE_WAY_BROADCAST) {
             childFragmentManager.commitTransaction {
                 replace(R.id.composerContainer, MessageComposerFragment())
             }
         }
 
-        if (childFragmentManager.findFragmentById(R.id.voiceMessageRecorderContainer) == null) {
+        if (childFragmentManager.findFragmentById(R.id.voiceMessageRecorderContainer) == null && !BuildConfig.ONE_WAY_BROADCAST) {
             childFragmentManager.commitTransaction {
                 replace(R.id.voiceMessageRecorderContainer, VoiceRecorderFragment())
             }
@@ -803,10 +804,10 @@ class TimelineFragment :
                 handleMenuItemSelected(menuItem)
             }
         }
-        val joinConfItem = menu.findItem(R.id.join_conference)
-        (joinConfItem.actionView as? JoinConferenceView)?.onJoinClicked = {
-            timelineViewModel.handle(RoomDetailAction.JoinJitsiCall)
-        }
+//        val joinConfItem = menu.findItem(R.id.join_conference)
+//        (joinConfItem.actionView as? JoinConferenceView)?.onJoinClicked = {
+//            timelineViewModel.handle(RoomDetailAction.JoinJitsiCall)
+//        }
 
         // Custom thread notification menu item
         menu.findItem(R.id.menu_timeline_thread_list)?.let { menuItem ->
@@ -829,8 +830,8 @@ class TimelineFragment :
                 2 -> state.isAllowedToStartWebRTCCall
                 else -> state.isAllowedToManageWidgets
             }
-            menu.findItem(R.id.video_call).icon?.alpha = if (callButtonsEnabled) 0xFF else 0x40
-            menu.findItem(R.id.voice_call).icon?.alpha = if (callButtonsEnabled || state.hasActiveElementCallWidget()) 0xFF else 0x40
+//            menu.findItem(R.id.video_call).icon?.alpha = if (callButtonsEnabled) 0xFF else 0x40
+//            menu.findItem(R.id.voice_call).icon?.alpha = if (callButtonsEnabled || state.hasActiveElementCallWidget()) 0xFF else 0x40
 
             val matrixAppsMenuItem = menu.findItem(R.id.open_matrix_apps)
             val widgetsCount = state.activeRoomWidgets.invoke()?.size ?: 0
@@ -860,10 +861,10 @@ class TimelineFragment :
 
     override fun handleMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.invite -> {
-                navigator.openInviteUsersToRoom(requireActivity(), timelineArgs.roomId)
-                true
-            }
+//            R.id.invite -> {
+//                navigator.openInviteUsersToRoom(requireActivity(), timelineArgs.roomId)
+//                true
+//            }
             R.id.timeline_setting -> {
                 navigator.openRoomProfile(requireActivity(), timelineArgs.roomId)
                 true
@@ -872,14 +873,14 @@ class TimelineFragment :
                 timelineViewModel.handle(RoomDetailAction.ManageIntegrations)
                 true
             }
-            R.id.voice_call -> {
-                callActionsHandler.onVoiceCallClicked()
-                true
-            }
-            R.id.video_call -> {
-                callActionsHandler.onVideoCallClicked()
-                true
-            }
+//            R.id.voice_call -> {
+//                callActionsHandler.onVoiceCallClicked()
+//                true
+//            }
+//            R.id.video_call -> {
+//                callActionsHandler.onVideoCallClicked()
+//                true
+//            }
             R.id.menu_timeline_thread_list -> {
                 navigateToThreadList()
                 true

@@ -29,6 +29,7 @@ import im.vector.app.core.extensions.replaceFragment
 import im.vector.app.core.platform.SimpleFragmentActivity
 import im.vector.app.core.platform.WaitingViewData
 import im.vector.app.features.crypto.keysbackup.setup.KeysBackupSetupActivity
+import im.vector.app.features.crypto.keysbackup.setup.KeysBackupSetupSharedViewModel
 import im.vector.app.features.crypto.quads.SharedSecureStorageActivity
 import org.matrix.android.sdk.api.session.crypto.crosssigning.KEYBACKUP_SECRET_SSSS_NAME
 

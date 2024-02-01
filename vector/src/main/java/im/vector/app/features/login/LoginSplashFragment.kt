@@ -61,13 +61,14 @@ class LoginSplashFragment :
     private fun setupViews() {
         views.loginSplashSubmit.debouncedClicks { getStarted() }
 
-        if (buildMeta.isDebug || vectorPreferences.developerMode()) {
-            views.loginSplashVersion.isVisible = true
-            @SuppressLint("SetTextI18n")
-            views.loginSplashVersion.text = "Version : ${buildMeta.versionName}\n" +
-                    "Branch: ${buildMeta.gitBranchName} ${buildMeta.gitRevision}"
-            views.loginSplashVersion.debouncedClicks { navigator.openDebug(requireContext()) }
-        }
+        // TODO: CHRIS: Just turn this off completely
+//        if (buildMeta.isDebug || vectorPreferences.developerMode()) {
+//            views.loginSplashVersion.isVisible = true
+//            @SuppressLint("SetTextI18n")
+//            views.loginSplashVersion.text = "Version : ${buildMeta.versionName}\n" +
+//                    "Branch: ${buildMeta.gitBranchName} ${buildMeta.gitRevision}"
+//            views.loginSplashVersion.debouncedClicks { navigator.openDebug(requireContext()) }
+//        }
     }
 
     private fun getStarted() {

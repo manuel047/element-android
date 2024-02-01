@@ -41,7 +41,9 @@ class AnalyticsOptInActivity : VectorBaseActivity<ActivitySimpleBinding>() {
     override fun initUiAndData() {
         orientationLocker.lockPhonesToPortrait(this)
         if (isFirstCreation()) {
-            addFragment(views.simpleFragmentContainer, AnalyticsOptInFragment::class.java)
+            //addFragment(views.simpleFragmentContainer, AnalyticsOptInFragment::class.java)
+            // TODO: CHRIS: Skip the consent screen and disable it directly.
+            viewModel.handle(AnalyticsConsentViewActions.SetUserConsent(userConsent = false))
         }
 
         viewModel.observeViewEvents {

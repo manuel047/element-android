@@ -160,16 +160,16 @@ class DeviceVerificationInfoBottomSheetController @Inject constructor(
                     bottomSheetDividerItem {
                         id("completeSecurityDiv")
                     }
-                    bottomSheetVerificationActionItem {
-                        id("completeSecurity")
-                        title(host.stringProvider.getString(R.string.crosssigning_verify_this_session))
-                        titleColor(host.colorProvider.getColorFromAttribute(R.attr.colorPrimary))
-                        iconRes(R.drawable.ic_arrow_right)
-                        iconColor(host.colorProvider.getColorFromAttribute(R.attr.colorPrimary))
-                        listener {
-                            host.callback?.onAction(DevicesAction.CompleteSecurity)
-                        }
-                    }
+//                    bottomSheetVerificationActionItem {
+//                        id("completeSecurity")
+//                        title(host.stringProvider.getString(R.string.crosssigning_verify_this_session))
+//                        titleColor(host.colorProvider.getColorFromAttribute(R.attr.colorPrimary))
+//                        iconRes(R.drawable.ic_arrow_right)
+//                        iconColor(host.colorProvider.getColorFromAttribute(R.attr.colorPrimary))
+//                        listener {
+//                            host.callback?.onAction(DevicesAction.CompleteSecurity)
+//                        }
+//                    }
                 } else {
                     bottomSheetDividerItem {
                         id("resetSecurityDiv")

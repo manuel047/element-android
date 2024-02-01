@@ -54,6 +54,7 @@ import im.vector.app.features.MainActivityArgs
 import im.vector.app.features.analytics.accountdata.AnalyticsAccountDataViewModel
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.crypto.keysbackup.setup.KeysBackupSetupSharedViewModel
 import im.vector.app.features.crypto.recover.SetupMode
 import im.vector.app.features.home.room.list.actions.RoomListSharedAction
 import im.vector.app.features.home.room.list.actions.RoomListSharedActionViewModel
@@ -91,10 +92,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
+import org.matrix.android.sdk.api.session.crypto.keysbackup.KeysBackupState
 import org.matrix.android.sdk.api.session.permalinks.PermalinkService
-import org.matrix.android.sdk.api.session.sync.InitialSyncStrategy
 import org.matrix.android.sdk.api.session.sync.SyncRequestState
-import org.matrix.android.sdk.api.session.sync.initialSyncStrategy
 import org.matrix.android.sdk.api.util.MatrixItem
 import timber.log.Timber
 import javax.inject.Inject
@@ -117,6 +117,7 @@ class HomeActivity :
 
     private lateinit var sharedActionViewModel: HomeSharedActionViewModel
     private lateinit var roomListSharedActionViewModel: RoomListSharedActionViewModel
+    private lateinit var keyBackupSetupViewModel: KeysBackupSetupSharedViewModel
 
     private val homeActivityViewModel: HomeActivityViewModel by viewModel()
 
@@ -141,6 +142,10 @@ class HomeActivity :
     @Inject lateinit var notificationPermissionManager: NotificationPermissionManager
 
     private var isNewAppLayoutEnabled: Boolean = false // delete once old app layout is removed
+
+    private val session by lazy {
+        activeSessionHolder.getActiveSession()
+    }
 
     private val createSpaceResultLauncher = registerStartForActivityResult { activityResult ->
         if (activityResult.resultCode == Activity.RESULT_OK) {
@@ -209,6 +214,9 @@ class HomeActivity :
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, false)
         sharedActionViewModel = viewModelProvider[HomeSharedActionViewModel::class.java]
         roomListSharedActionViewModel = viewModelProvider[RoomListSharedActionViewModel::class.java]
+        keyBackupSetupViewModel = viewModelProvider[KeysBackupSetupSharedViewModel::class.java]
+        keyBackupSetupViewModel.initSession(session)
+
         views.drawerLayout.addDrawerListener(drawerListener)
         if (isFirstCreation()) {
             if (vectorPreferences.isNewAppLayoutEnabled()) {
@@ -251,8 +259,8 @@ class HomeActivity :
         homeActivityViewModel.observeViewEvents {
             when (it) {
                 is HomeActivityViewEvents.AskPasswordToInitCrossSigning -> handleAskPasswordToInitCrossSigning(it)
-                is HomeActivityViewEvents.CurrentSessionNotVerified -> handleOnNewSession(it)
-                is HomeActivityViewEvents.CurrentSessionCannotBeVerified -> handleCantVerify(it)
+                is HomeActivityViewEvents.CurrentSessionNotVerified -> handleOnNewSession()
+                is HomeActivityViewEvents.CurrentSessionCannotBeVerified -> handleCantVerify()
                 HomeActivityViewEvents.PromptToEnableSessionPush -> handlePromptToEnablePush()
                 HomeActivityViewEvents.StartRecoverySetupFlow -> handleStartRecoverySetup()
                 is HomeActivityViewEvents.ForceVerification -> {
@@ -467,38 +475,40 @@ class HomeActivity :
         }
     }
 
-    private fun handleOnNewSession(event: HomeActivityViewEvents.CurrentSessionNotVerified) {
-        // We need to ask
-        val titleRes = if (event.afterMigration) {
-            R.string.crosssigning_verify_after_update
-        } else {
-            R.string.crosssigning_verify_this_session
-        }
-        val descRes = if (event.afterMigration) {
-            R.string.confirm_your_identity_after_update
-        } else {
-            R.string.confirm_your_identity
-        }
-        promptSecurityEvent(
-                uid = PopupAlertManager.VERIFY_SESSION_UID,
-                userItem = event.userItem,
-                titleRes = titleRes,
-                descRes = descRes,
-        ) {
-            it.navigator.requestSelfSessionVerification(it)
-        }
+    private fun handleOnNewSession(/*event: HomeActivityViewEvents.CurrentSessionNotVerified*/) {
+        return
+//        // We need to ask
+//        val titleRes = if (event.afterMigration) {
+//            R.string.crosssigning_verify_after_update
+//        } else {
+//            R.string.crosssigning_verify_this_session
+//        }
+//        val descRes = if (event.afterMigration) {
+//            R.string.confirm_your_identity_after_update
+//        } else {
+//            R.string.confirm_your_identity
+//        }
+//        promptSecurityEvent(
+//                uid = PopupAlertManager.VERIFY_SESSION_UID,
+//                userItem = event.userItem,
+//                titleRes = titleRes,
+//                descRes = descRes,
+//        ) {
+//            it.navigator.requestSelfSessionVerification(it)
+//        }
     }
 
-    private fun handleCantVerify(event: HomeActivityViewEvents.CurrentSessionCannotBeVerified) {
-        // We need to ask
-        promptSecurityEvent(
-                uid = PopupAlertManager.UPGRADE_SECURITY_UID,
-                userItem = event.userItem,
-                titleRes = R.string.crosssigning_cannot_verify_this_session,
-                descRes = R.string.crosssigning_cannot_verify_this_session_desc,
-        ) {
-            it.navigator.open4SSetup(it, SetupMode.PASSPHRASE_AND_NEEDED_SECRETS_RESET)
-        }
+    private fun handleCantVerify(/*event: HomeActivityViewEvents.CurrentSessionCannotBeVerified*/) {
+        return
+//        // We need to ask
+//        promptSecurityEvent(
+//                uid = PopupAlertManager.UPGRADE_SECURITY_UID,
+//                userItem = event.userItem,
+//                titleRes = R.string.crosssigning_cannot_verify_this_session,
+//                descRes = R.string.crosssigning_cannot_verify_this_session_desc,
+//        ) {
+//            it.navigator.open4SSetup(it, SetupMode.PASSPHRASE_AND_NEEDED_SECRETS_RESET)
+//        }
     }
 
     private fun handlePromptToEnablePush() {
@@ -588,19 +598,23 @@ class HomeActivity :
     override fun onResume() {
         super.onResume()
 
+        // TODO: CHRIS: Disabled dialog for now
         if (vectorUncaughtExceptionHandler.didAppCrash()) {
             vectorUncaughtExceptionHandler.clearAppCrashStatus()
 
-            MaterialAlertDialogBuilder(this)
+            /*MaterialAlertDialogBuilder(this)
                     .setMessage(R.string.send_bug_report_app_crashed)
                     .setCancelable(false)
                     .setPositiveButton(R.string.yes) { _, _ -> bugReporter.openBugReportScreen(this) }
                     .setNegativeButton(R.string.no) { _, _ -> bugReporter.deleteCrashFile() }
-                    .show()
+                    .show()*/
         }
 
         // Force remote backup state update to update the banner if needed
         serverBackupStatusViewModel.refreshRemoteStateIfNeeded()
+
+        // Check if there is a backup and start creating backup if not enabled
+        startKeyBackupOperations()
 
         // Check nightly
         if (nightlyProxy.canDisplayPopup()) {
@@ -608,6 +622,12 @@ class HomeActivity :
         }
 
         checkNewAppLayoutFlagChange()
+    }
+
+    private fun startKeyBackupOperations() {
+        if (keyBackupSetupViewModel.session.cryptoService().keysBackupService().getState() == KeysBackupState.Disabled) {
+            keyBackupSetupViewModel.prepareRecoveryKey(this, keyBackupSetupViewModel.userId)
+        }
     }
 
     private fun checkNewAppLayoutFlagChange() {
@@ -625,28 +645,28 @@ class HomeActivity :
 
     override fun handleMenuItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_home_suggestion -> {
-                bugReporter.openBugReportScreen(this, ReportType.SUGGESTION)
-                true
-            }
-            R.id.menu_home_report_bug -> {
-                bugReporter.openBugReportScreen(this, ReportType.BUG_REPORT)
-                true
-            }
-            R.id.menu_home_init_sync_legacy -> {
-                // Configure the SDK
-                initialSyncStrategy = InitialSyncStrategy.Legacy
-                // And clear cache
-                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
-                true
-            }
-            R.id.menu_home_init_sync_optimized -> {
-                // Configure the SDK
-                initialSyncStrategy = InitialSyncStrategy.Optimized()
-                // And clear cache
-                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
-                true
-            }
+//            R.id.menu_home_suggestion -> {
+//                bugReporter.openBugReportScreen(this, ReportType.SUGGESTION)
+//                true
+//            }
+//            R.id.menu_home_report_bug -> {
+//                bugReporter.openBugReportScreen(this, ReportType.BUG_REPORT)
+//                true
+//            }
+//            R.id.menu_home_init_sync_legacy -> {
+//                // Configure the SDK
+//                initialSyncStrategy = InitialSyncStrategy.Legacy
+//                // And clear cache
+//                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
+//                true
+//            }
+//            R.id.menu_home_init_sync_optimized -> {
+//                // Configure the SDK
+//                initialSyncStrategy = InitialSyncStrategy.Optimized()
+//                // And clear cache
+//                MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
+//                true
+//            }
             R.id.menu_home_filter -> {
                 navigator.openRoomsFiltering(this)
                 true
@@ -659,14 +679,14 @@ class HomeActivity :
                 showLayoutSettings()
                 true
             }
-            R.id.menu_home_invite_friends -> {
-                launchInviteFriends()
-                true
-            }
-            R.id.menu_home_qr -> {
-                launchQrCode()
-                true
-            }
+//            R.id.menu_home_invite_friends -> {
+//                launchInviteFriends()
+//                true
+//            }
+//            R.id.menu_home_qr -> {
+//                launchQrCode()
+//                true
+//            }
             else -> false
         }
     }

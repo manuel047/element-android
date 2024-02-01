@@ -82,22 +82,23 @@ class FtueAuthSplashCarouselFragment :
         carouselController.setData(carouselStateFactory.create())
 
         val isAlreadyHaveAccountEnabled = vectorFeatures.isOnboardingAlreadyHaveAccountSplashEnabled()
-        views.loginSplashSubmit.apply {
-            setText(if (isAlreadyHaveAccountEnabled) R.string.login_splash_create_account else R.string.login_splash_submit)
-            debouncedClicks { splashSubmit(isAlreadyHaveAccountEnabled) }
-        }
+//        views.loginSplashSubmit.apply {
+//            setText(if (isAlreadyHaveAccountEnabled) R.string.login_splash_create_account else R.string.login_splash_submit)
+//            debouncedClicks { splashSubmit(isAlreadyHaveAccountEnabled) }
+//        }
+        views.loginSplashSubmit.visibility = View.GONE
         views.loginSplashAlreadyHaveAccount.apply {
             isVisible = isAlreadyHaveAccountEnabled
             debouncedClicks { alreadyHaveAnAccount() }
         }
 
-        if (buildMeta.isDebug || vectorPreferences.developerMode()) {
-            views.loginSplashVersion.isVisible = true
-            @SuppressLint("SetTextI18n")
-            views.loginSplashVersion.text = "Version : ${buildMeta.versionName}\n" +
-                    "Branch: ${buildMeta.gitBranchName} ${buildMeta.gitRevision}"
-            views.loginSplashVersion.debouncedClicks { navigator.openDebug(requireContext()) }
-        }
+//        if (buildMeta.isDebug || vectorPreferences.developerMode()) {
+//            views.loginSplashVersion.isVisible = true
+//            @SuppressLint("SetTextI18n")
+//            views.loginSplashVersion.text = "Version : ${buildMeta.versionName}\n" +
+//                    "Branch: ${buildMeta.gitBranchName} ${buildMeta.gitRevision}"
+//            views.loginSplashVersion.debouncedClicks { navigator.openDebug(requireContext()) }
+//        }
         views.splashCarousel.registerAutomaticUntilInteractionTransitions()
     }
 

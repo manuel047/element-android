@@ -9,7 +9,8 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/splashCarousel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/splashCarouselFloatingSection"
@@ -19,6 +20,7 @@
         app:layout_constraintGuide_percent="0.65" />
 
     <com.google.android.material.tabs.TabLayout
+        android:visibility="gone"
         android:id="@+id/carouselIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +76,7 @@
         style="@style/Widget.Vector.Button.Text.Login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/login_splash_already_have_account"
+        android:text="Get Started"
         android:textAllCaps="true"
         android:transitionName="loginSubmitTransition"
         app:layout_constraintBottom_toTopOf="@id/loginSplashBottomSpace"
@@ -107,5 +109,17 @@
         app:layout_constraintStart_toStartOf="@id/splashCarouselGutterStart"
         tools:text="@string/settings_version"
         tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/michelin_settings_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
