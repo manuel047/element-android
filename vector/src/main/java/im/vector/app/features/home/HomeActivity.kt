@@ -30,6 +30,7 @@ import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
 import com.airbnb.mvrx.Mavericks
@@ -39,6 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
 import im.vector.app.SpaceStateHandler
 import im.vector.app.core.extensions.hideKeyboard
+import im.vector.app.core.extensions.observeEvent
 import im.vector.app.core.extensions.registerStartForActivityResult
 import im.vector.app.core.extensions.replaceFragment
 import im.vector.app.core.extensions.restart
@@ -46,6 +48,7 @@ import im.vector.app.core.extensions.validateBackPressed
 import im.vector.app.core.platform.VectorBaseActivity
 import im.vector.app.core.platform.VectorMenuProvider
 import im.vector.app.core.pushers.UnifiedPushHelper
+import im.vector.app.core.utils.LiveEvent
 import im.vector.app.core.utils.registerForPermissionsResult
 import im.vector.app.core.utils.startSharePlainTextIntent
 import im.vector.app.databinding.ActivityHomeBinding
@@ -54,6 +57,7 @@ import im.vector.app.features.MainActivityArgs
 import im.vector.app.features.analytics.accountdata.AnalyticsAccountDataViewModel
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.crypto.keysbackup.restore.KeysBackupRestoreSharedViewModel
 import im.vector.app.features.crypto.keysbackup.setup.KeysBackupSetupSharedViewModel
 import im.vector.app.features.crypto.recover.SetupMode
 import im.vector.app.features.home.room.list.actions.RoomListSharedAction
@@ -118,6 +122,7 @@ class HomeActivity :
     private lateinit var sharedActionViewModel: HomeSharedActionViewModel
     private lateinit var roomListSharedActionViewModel: RoomListSharedActionViewModel
     private lateinit var keyBackupSetupViewModel: KeysBackupSetupSharedViewModel
+    private lateinit var keysBackupRestoreSharedViewModel: KeysBackupRestoreSharedViewModel
 
     private val homeActivityViewModel: HomeActivityViewModel by viewModel()
 
@@ -215,7 +220,9 @@ class HomeActivity :
         sharedActionViewModel = viewModelProvider[HomeSharedActionViewModel::class.java]
         roomListSharedActionViewModel = viewModelProvider[RoomListSharedActionViewModel::class.java]
         keyBackupSetupViewModel = viewModelProvider[KeysBackupSetupSharedViewModel::class.java]
+        keysBackupRestoreSharedViewModel = viewModelProvider[KeysBackupRestoreSharedViewModel::class.java]
         keyBackupSetupViewModel.initSession(session)
+        keysBackupRestoreSharedViewModel.initSession(session)
 
         views.drawerLayout.addDrawerListener(drawerListener)
         if (isFirstCreation()) {
@@ -595,6 +602,16 @@ class HomeActivity :
         super.onDestroy()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        // Check if there is a backup and start creating backup if not enabled
+        startKeyBackupOperations()
+
+        // restore backup if available
+        recoverKeyBackup()
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -613,15 +630,25 @@ class HomeActivity :
         // Force remote backup state update to update the banner if needed
         serverBackupStatusViewModel.refreshRemoteStateIfNeeded()
 
-        // Check if there is a backup and start creating backup if not enabled
-        startKeyBackupOperations()
-
         // Check nightly
         if (nightlyProxy.canDisplayPopup()) {
             nightlyProxy.updateApplication()
         }
 
         checkNewAppLayoutFlagChange()
+    }
+
+    private fun recoverKeyBackup() {
+        lifecycleScope.launch {
+            val backupService = keysBackupRestoreSharedViewModel.session.cryptoService().keysBackupService()
+            val serverBackupVersion = backupService.getCurrentVersion()
+            val localBackupVersion = backupService.currentBackupVersion
+            if (backupService.getState() != KeysBackupState.Disabled) {
+                if (serverBackupVersion != null) {
+                    keysBackupRestoreSharedViewModel.recoverUsingBackupPass(session.myUserId)
+                }
+            }
+        }
     }
 
     private fun startKeyBackupOperations() {
