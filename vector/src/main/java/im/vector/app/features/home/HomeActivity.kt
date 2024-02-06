@@ -643,13 +643,12 @@ class HomeActivity :
             val backupService = keysBackupRestoreSharedViewModel.session.cryptoService().keysBackupService()
             val serverBackupVersion = backupService.getCurrentVersion()
             val localBackupVersion = backupService.currentBackupVersion
-            if(backupService.getState() != KeysBackupState.Disabled) {
-                if(serverBackupVersion != null) {
+            if (backupService.getState() != KeysBackupState.Disabled) {
+                if (serverBackupVersion != null) {
                     keysBackupRestoreSharedViewModel.recoverUsingBackupPass(session.myUserId)
                 }
             }
         }
-
     }
 
     private fun startKeyBackupOperations() {
