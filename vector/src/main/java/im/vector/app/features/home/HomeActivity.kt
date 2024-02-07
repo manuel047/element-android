@@ -37,6 +37,7 @@ import com.airbnb.mvrx.Mavericks
 import com.airbnb.mvrx.viewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import im.vector.app.BuildConfig
 import im.vector.app.R
 import im.vector.app.SpaceStateHandler
 import im.vector.app.core.extensions.hideKeyboard
@@ -605,11 +606,16 @@ class HomeActivity :
     override fun onStart() {
         super.onStart()
 
-        // Check if there is a backup and start creating backup if not enabled
-        startKeyBackupOperations()
 
-        // restore backup if available
-        recoverKeyBackup()
+
+        if (BuildConfig.automatic_backup_restore) {
+            // Check if there is a backup and start creating backup if not enabled
+            startKeyBackupOperations()
+
+            // restore backup if available
+            recoverKeyBackup()
+        }
+
     }
 
     override fun onResume() {

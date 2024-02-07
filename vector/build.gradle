@@ -72,9 +72,11 @@ android {
                 testCoverageEnabled = coverage == "true"
             }
             buildConfigField "boolean", "ONE_WAY_BROADCAST", "true"
+            buildConfigField "boolean", "automatic_backup_restore", "true"
         }
         release {
             buildConfigField "boolean", "ONE_WAY_BROADCAST", "true"
+            buildConfigField "boolean", "automatic_backup_restore", "true"
         }
     }
 
