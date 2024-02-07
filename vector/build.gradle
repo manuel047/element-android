@@ -73,10 +73,12 @@ android {
             }
             buildConfigField "boolean", "ONE_WAY_BROADCAST", "true"
             buildConfigField "boolean", "automatic_backup_restore", "true"
+            buildConfigField "boolean", "hide_backup_dialog", "true"
         }
         release {
             buildConfigField "boolean", "ONE_WAY_BROADCAST", "true"
             buildConfigField "boolean", "automatic_backup_restore", "true"
+            buildConfigField "boolean", "hide_backup_dialog", "true"
         }
     }
 
