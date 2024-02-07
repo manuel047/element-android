@@ -19,6 +19,7 @@ package im.vector.app.features.workers.signout
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import im.vector.app.BuildConfig
 import im.vector.app.R
 import im.vector.app.core.extensions.cannotLogoutSafely
 import im.vector.app.core.extensions.singletonEntryPoint
@@ -36,7 +37,7 @@ class SignOutUiWorker(private val activity: FragmentActivity) {
     }
 
     private fun CoroutineScope.perform(session: Session) = launch {
-        if (session.cannotLogoutSafely()) {
+        if (!BuildConfig.hide_backup_dialog && session.cannotLogoutSafely()) {
             // The backup check on logout flow has to be displayed if there are keys in the store, and the keys backup state is not Ready
             val signOutDialog = SignOutBottomSheetDialogFragment.newInstance()
             signOutDialog.onSignOut = Runnable {
@@ -45,15 +46,19 @@ class SignOutUiWorker(private val activity: FragmentActivity) {
             signOutDialog.show(activity.supportFragmentManager, "SO")
         } else {
             // Display a simple confirmation dialog
-            MaterialAlertDialogBuilder(activity)
-                    .setTitle(R.string.action_sign_out)
-                    .setMessage(R.string.action_sign_out_confirmation_simple)
-                    .setPositiveButton(R.string.action_sign_out) { _, _ ->
-                        doSignOut()
-                    }
-                    .setNegativeButton(R.string.action_cancel, null)
-                    .show()
+            displaySimpleConfirmationDialog()
         }
+    }
+
+    private fun displaySimpleConfirmationDialog() {
+        MaterialAlertDialogBuilder(activity)
+                .setTitle(R.string.action_sign_out)
+                .setMessage(R.string.action_sign_out_confirmation_simple)
+                .setPositiveButton(R.string.action_sign_out) { _, _ ->
+                    doSignOut()
+                }
+                .setNegativeButton(R.string.action_cancel, null)
+                .show()
     }
 
     private fun doSignOut() {
