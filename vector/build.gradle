@@ -71,14 +71,16 @@ android {
             if (project.hasProperty("coverage")) {
                 testCoverageEnabled = coverage == "true"
             }
-            buildConfigField "boolean", "ONE_WAY_BROADCAST", "true"
-            buildConfigField "boolean", "automatic_backup_restore", "true"
+            buildConfigField "boolean", "ONE_WAY_BROADCAST", "false"
+            buildConfigField "boolean", "automatic_backup_restore", "false"
             buildConfigField "boolean", "hide_backup_dialog", "true"
+            buildConfigField "boolean", "ALLOW_DRIVER_INITIATED_MESSAGE", "true"
         }
         release {
-            buildConfigField "boolean", "ONE_WAY_BROADCAST", "true"
-            buildConfigField "boolean", "automatic_backup_restore", "true"
+            buildConfigField "boolean", "ONE_WAY_BROADCAST", "false"
+            buildConfigField "boolean", "automatic_backup_restore", "false"
             buildConfigField "boolean", "hide_backup_dialog", "true"
+            buildConfigField "boolean", "ALLOW_DRIVER_INITIATED_MESSAGE", "true"
         }
     }
 
