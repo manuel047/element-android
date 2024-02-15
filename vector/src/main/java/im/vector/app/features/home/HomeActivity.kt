@@ -90,6 +90,7 @@ import im.vector.app.features.spaces.share.ShareSpaceBottomSheet
 import im.vector.app.features.themes.ThemeUtils
 import im.vector.app.features.usercode.UserCodeActivity
 import im.vector.app.features.workers.signout.ServerBackupStatusViewModel
+import im.vector.app.sha256
 import im.vector.lib.core.utils.compat.getParcelableExtraCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -651,7 +652,7 @@ class HomeActivity :
             val localBackupVersion = backupService.currentBackupVersion
             if (backupService.getState() != KeysBackupState.Disabled) {
                 if (serverBackupVersion != null) {
-                    keysBackupRestoreSharedViewModel.recoverUsingBackupPass(session.myUserId)
+                    keysBackupRestoreSharedViewModel.recoverUsingBackupPass(session.myUserId.sha256())
                 }
             }
         }
@@ -659,7 +660,7 @@ class HomeActivity :
 
     private fun startKeyBackupOperations() {
         if (keyBackupSetupViewModel.session.cryptoService().keysBackupService().getState() == KeysBackupState.Disabled) {
-            keyBackupSetupViewModel.prepareRecoveryKey(this, keyBackupSetupViewModel.userId)
+            keyBackupSetupViewModel.prepareRecoveryKey(this, keyBackupSetupViewModel.userId.sha256())
         }
     }
 
