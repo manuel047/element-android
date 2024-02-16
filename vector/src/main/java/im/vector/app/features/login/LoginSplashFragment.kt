@@ -61,7 +61,7 @@ class LoginSplashFragment :
     private fun setupViews() {
         views.loginSplashSubmit.debouncedClicks { getStarted() }
 
-        // TODO: CHRIS: Just turn this off completely
+        // MCF Customisation: Just turn this off completely
 //        if (buildMeta.isDebug || vectorPreferences.developerMode()) {
 //            views.loginSplashVersion.isVisible = true
 //            @SuppressLint("SetTextI18n")

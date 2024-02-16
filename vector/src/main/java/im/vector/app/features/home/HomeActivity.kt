@@ -622,7 +622,7 @@ class HomeActivity :
     override fun onResume() {
         super.onResume()
 
-        // TODO: CHRIS: Disabled dialog for now
+        // MCF Customisation: Disabled dialog for now
         if (vectorUncaughtExceptionHandler.didAppCrash()) {
             vectorUncaughtExceptionHandler.clearAppCrashStatus()
 

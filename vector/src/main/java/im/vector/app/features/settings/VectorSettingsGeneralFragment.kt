@@ -350,7 +350,7 @@ class VectorSettingsGeneralFragment :
     }
 
     private fun refreshIntegrationManagerSettings() {
-        // TODO: CHRIS: Force integrations off
+        // MCF Customisation: Force integrations off
         val integrationAllowed = false
         // val integrationAllowed = session.integrationManagerService().isIntegrationEnabled()
         (findPreference<SwitchPreference>(VectorPreferences.SETTINGS_ALLOW_INTEGRATIONS_KEY))!!.let {

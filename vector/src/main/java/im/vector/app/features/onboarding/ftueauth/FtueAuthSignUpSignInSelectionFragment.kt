@@ -62,7 +62,7 @@ class FtueAuthSignUpSignInSelectionFragment :
 
     private fun render(state: OnboardingViewState) {
         when (state.serverType) {
-            // TODO: CHRIS: This is used on the "SSO" sign in option
+            // MCF Customisation:
             ServerType.MatrixOrg -> renderServerInformation(
                     icon = null,
                     title = getString(R.string.mcf_server_connect_title),
