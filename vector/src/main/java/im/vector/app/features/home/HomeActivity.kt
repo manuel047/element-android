@@ -609,7 +609,7 @@ class HomeActivity :
 
 
 
-        if (BuildConfig.automatic_backup_restore) {
+        if (BuildConfig.AUTOMATIC_BACKUP_RESTORE) {
             // Check if there is a backup and start creating backup if not enabled
             startKeyBackupOperations()
 

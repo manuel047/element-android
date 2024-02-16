@@ -37,7 +37,7 @@ class SignOutUiWorker(private val activity: FragmentActivity) {
     }
 
     private fun CoroutineScope.perform(session: Session) = launch {
-        if (!BuildConfig.hide_backup_dialog && session.cannotLogoutSafely()) {
+        if (!BuildConfig.HIDE_BACKUP_DIALOG && session.cannotLogoutSafely()) {
             // The backup check on logout flow has to be displayed if there are keys in the store, and the keys backup state is not Ready
             val signOutDialog = SignOutBottomSheetDialogFragment.newInstance()
             signOutDialog.onSignOut = Runnable {

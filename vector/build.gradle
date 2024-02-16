@@ -71,15 +71,27 @@ android {
             if (project.hasProperty("coverage")) {
                 testCoverageEnabled = coverage == "true"
             }
-            buildConfigField "boolean", "ONE_WAY_BROADCAST", "false"
-            buildConfigField "boolean", "automatic_backup_restore", "false"
-            buildConfigField "boolean", "hide_backup_dialog", "true"
+
+            // MCF-Customisations
+
+            // Don't allow users to reply to any messages by removing the input field from message conversations.
+            buildConfigField "boolean", "ONE_WAY_BROADCAST", "true"
+
+            // Automatically back up message encryption key to server if there is none, and restore on login if one exists.
+            // Don't forget to change config-settings.xml 'settings_root_security_privacy_visible' to correctly hide/show the encryption menu 
+            buildConfigField "boolean", "AUTOMATIC_BACKUP_RESTORE", "false"
+            
+            // Hide the message key backup dialog on logout if there is none saved on the server.
+            buildConfigField "boolean", "HIDE_BACKUP_DIALOG", "true"
+
+            // Enable the create chat button, ie allow a user to send a direct message to any other user.
+            // ONE_WAY_BROADCAST also has to be false for this to work as otherwise they can't enter text.
             buildConfigField "boolean", "ALLOW_DRIVER_INITIATED_MESSAGE", "true"
         }
         release {
             buildConfigField "boolean", "ONE_WAY_BROADCAST", "false"
-            buildConfigField "boolean", "automatic_backup_restore", "false"
-            buildConfigField "boolean", "hide_backup_dialog", "true"
+            buildConfigField "boolean", "AUTOMATIC_BACKUP_RESTORE", "false"
+            buildConfigField "boolean", "HIDE_BACKUP_DIALOG", "true"
             buildConfigField "boolean", "ALLOW_DRIVER_INITIATED_MESSAGE", "true"
         }
     }
