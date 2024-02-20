@@ -22,6 +22,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -92,6 +93,7 @@ import im.vector.app.features.usercode.UserCodeActivity
 import im.vector.app.features.workers.signout.ServerBackupStatusViewModel
 import im.vector.app.sha256
 import im.vector.lib.core.utils.compat.getParcelableExtraCompat
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -103,6 +105,7 @@ import org.matrix.android.sdk.api.session.permalinks.PermalinkService
 import org.matrix.android.sdk.api.session.sync.SyncRequestState
 import org.matrix.android.sdk.api.util.MatrixItem
 import timber.log.Timber
+import java.security.InvalidParameterException
 import javax.inject.Inject
 
 @Parcelize
@@ -152,6 +155,12 @@ class HomeActivity :
 
     private val session by lazy {
         activeSessionHolder.getActiveSession()
+    }
+
+    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        if(throwable is InvalidParameterException) {
+            Timber.tag("ELEMENT_MESSENGER_APP").d("EXCEPTION IS " + throwable.message)
+        }
     }
 
     private val createSpaceResultLauncher = registerStartForActivityResult { activityResult ->
@@ -646,7 +655,7 @@ class HomeActivity :
     }
 
     private fun recoverKeyBackup() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(exceptionHandler) {
             val backupService = keysBackupRestoreSharedViewModel.session.cryptoService().keysBackupService()
             val serverBackupVersion = backupService.getCurrentVersion()
             val localBackupVersion = backupService.currentBackupVersion
